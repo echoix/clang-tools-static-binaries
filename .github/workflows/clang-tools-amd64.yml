@@ -2,7 +2,9 @@ name: clang-tools-static-amd64
 
 on:
   push:
-    branches: [ master, macos-smaller-binaries-2 ]
+    branches: [ master ]
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -280,6 +282,7 @@ jobs:
           }
   draft-release:
     runs-on: ubuntu-22.04
+    if: ${{ github.ref == 'ref/head/master' }}
     needs: [build, test-release]
     steps:
       - name: download artifacts
